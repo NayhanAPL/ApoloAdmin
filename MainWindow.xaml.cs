@@ -81,16 +81,14 @@ namespace ApoloAdmin
         {
             new ResumenCurriculo().Show();
         }
-
+        public static int indexSelected = -1;
         private void Borrar_Click(object sender, RoutedEventArgs e)
         {
             if (ListArtistas.SelectedIndex != -1)
             {
-                new SiNo.Show();
-                if (SiNo.respuesta)
-                {
-                    ListArtistas.Items
-                }
+                indexSelected = ListArtistas.SelectedIndex;
+                new SiNo().Show();
+                ListArtistas.ItemsSource = listArt;
             }
             else MessageBox.Show("Debe seleccionar un artista para poder borrarlo.");
         }

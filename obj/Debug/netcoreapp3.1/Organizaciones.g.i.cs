@@ -109,7 +109,7 @@ namespace ApoloAdmin {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ApoloAdmin;V1.0.0.0;component/organizaciones.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ApoloAdmin;component/organizaciones.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Organizaciones.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

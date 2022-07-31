@@ -26,3 +26,5 @@ C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\VinculacionesPro
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ManifestacionArtistica.baml
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Organizaciones.baml
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\VinculacionesProyectos.baml
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\SiNo.g.cs
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\SiNo.baml

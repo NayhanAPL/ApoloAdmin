@@ -21,6 +21,15 @@ namespace ApoloAdmin
         {
             InitializeComponent();
         }
-        public static bool respuesta = false;
+        private void Canselar_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Aceptar_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.listArt.RemoveAt(MainWindow.indexSelected);
+            this.Close();
+        }
     }
 }
