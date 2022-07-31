@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "ApoloAdmin/1.0.0": {
+        "runtime": {
+          "ApoloAdmin.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ApoloAdmin/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
