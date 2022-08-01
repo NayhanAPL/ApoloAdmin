@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="Vinculación a proyectos" Opacity="50" MinHeight="460" MinWidth="500" MaxHeight="460" MaxWidth="500" Height="460" Width="500">
+        Title="Vinculación a proyectos" Opacity="50" MinHeight="460" MinWidth="500" MaxHeight="460" MaxWidth="500" Height="452" Width="457">
     <Grid Background="White" Margin="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="4*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Margin="10,0,0,10" x:Name="ListArtistas" BorderBrush="LightGray">
+            <ListView Grid.Column="0" Margin="10,0,0,10" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray">
                 <ListView.Resources>
                     <Style TargetType="ScrollBar">
                         <Setter Property="Margin" Value="5"/>
@@ -61,7 +61,7 @@
                     <RowDefinition Height="35"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label FontSize="13" Grid.Row="0" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">Nombre del proyecto:</Label>
-                <TextBox Grid.Row="0" Height="25" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
+                <TextBox Grid.Row="0" Height="25" x:Name="nombre" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -69,7 +69,7 @@
                     </TextBox.Resources>
                 </TextBox>
                 <Label FontSize="13" Grid.Row="1" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">Lugar donde radica:</Label>
-                <TextBox Grid.Row="1" Height="25" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
+                <TextBox Grid.Row="1" Height="25" x:Name="lugar" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -77,7 +77,7 @@
                     </TextBox.Resources>
                 </TextBox>
                 <Label FontSize="13" Grid.Row="2" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">descripción:</Label>
-                <TextBox Grid.Row="2" TextWrapping="Wrap" BorderBrush="LightGray" Height="125" Padding="5,2" Margin="10,0">
+                <TextBox Grid.Row="2" TextWrapping="Wrap" x:Name="descripcion" BorderBrush="LightGray" Height="125" Padding="5,2" Margin="10,0">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -91,6 +91,13 @@
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="Borrar" Click="Borrar_Click" Grid.Column="0" Margin="10,5" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">Borrar
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button Grid.Column="1" x:Name="Canselar" HorizontalAlignment="Left" Click="Canselar_Click" Background="CornflowerBlue" Padding="10,0" Height="25" Width="80" FontSize="12" Foreground="White" BorderBrush="AliceBlue" Margin="0,4">Cancelar
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -113,6 +120,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Label Margin="10,0" Foreground="Blue" x:Name="mensajeSubLeft"></Label>
             <Button x:Name="Aceptar" Click="Aceptar_Click" Grid.Column="1" Margin="10,5" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">aceptar
                 <Button.Resources>
                     <Style TargetType="Border">

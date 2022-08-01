@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "5g+olEVEM+HcstmK8T2OGVkaz+2Jf4ddmU+ogmcRpLHt4Y8IEZKjyLOFflbgpgfW6opTbR5/4Fqur/8/53JdHg==",
+  "dgSpecHash": "Y7PHMFRq5Y/EHq8fy5k4FJ9mOyfmmAePbXlb1UnKo3CWJZoR7SCkdPlH7VN/OdEEzoXvnqIUtN2+mVn9uTNb3A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Nayhan\\source\\repos\\ApoloAdmin\\ApoloAdmin.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Nayhan\\.nuget\\packages\\sqlite-net-pcl\\1.8.116\\sqlite-net-pcl.1.8.116.nupkg.sha512",
+    "C:\\Users\\Nayhan\\.nuget\\packages\\sqlitepclraw.bundle_green\\2.0.4\\sqlitepclraw.bundle_green.2.0.4.nupkg.sha512",
+    "C:\\Users\\Nayhan\\.nuget\\packages\\sqlitepclraw.core\\2.0.4\\sqlitepclraw.core.2.0.4.nupkg.sha512",
+    "C:\\Users\\Nayhan\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.4\\sqlitepclraw.lib.e_sqlite3.2.0.4.nupkg.sha512",
+    "C:\\Users\\Nayhan\\.nuget\\packages\\sqlitepclraw.provider.dynamic_cdecl\\2.0.4\\sqlitepclraw.provider.dynamic_cdecl.2.0.4.nupkg.sha512",
+    "C:\\Users\\Nayhan\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
+  ],
   "logs": []
 }

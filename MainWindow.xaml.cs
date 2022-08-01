@@ -24,43 +24,44 @@ namespace ApoloAdmin
         public MainWindow()
         {
             InitializeComponent();
+            ButtonVisible(false);
             ByDefault();
         }
-        public static ObservableCollection<Artistas> listArt = new ObservableCollection<Artistas>();
-        private void ByDefault()
+
+        
+
+        public static ObservableCollection<Artistas> ObservablelistArt = new ObservableCollection<Artistas>();
+        public static List<Artistas> listArt = new List<Artistas>();
+        public static Artistas artSelected = new Artistas();
+        public static bool procesoActualizacion = false;
+        private static int index = -1;
+        public static int indexSelected = -1;
+
+        private void ButtonVisible(bool isVisible)
         {
+            if (isVisible)
+            {
+                Canselar.Opacity = 100;
+            }
+            if (!isVisible)
+            {
+                Canselar.Opacity = 0;
+            }
+        }
+        private async void ByDefault()
+        {           
             listArt.Clear();
-                listArt.Add(new Artistas()
-                {
-                    Nombre = "Nayhan",
-                    FechaNacimiento = new DateTime(2001, 2, 26),
-                    ActividadProfecional = "Programador",
-                    Correo = "nayhanprovedolabrada@gmail.com",
-                    Curriculo = "no tiene nada por ahora está tratando de conseguir su primer empleo, trabaja con hxamarin forms en la creacion de aplicaciones android alsnscjlkas aslkascas asclkas clksacas caslkcnskc; a;lvm d rvr[ vrwv rv orpvwe,vwe;lvcsdpvewv dvlc als casl;c k; csakc ec ec ek ckc asc as;ck ascas c askc pacac, ascasc asckas caksc alskc askc ac sack sack sack ecev  vkv l;v adv dsv;ds vd;slv sd;v, svk v;v ds;v sd;v sdv; sdvsdv ;v sd;lv dsvk sv;d vsd;v dsv;, ;sv sdkv sva;cas c;v sdkvs dvklds vds vs dvklsd vdslkv sd v dvlsd vls vlksd vkld vdksv dsklv dv  dv ewlkg ewgk d svdsv svk dsv sdv dkv skv sdvl dsvl dsvl dsv   dsvksdlfkdsafnakslfjasklfasf dslf dslfksdfaslfasf;ioawfhlkanvdascpiejgkdsn;vkNFI:OEANFVDSKLv;naiefvfnae,dsnkcads .",
-                    DireccionWeb = "https://www.google.ru/search",
-                    Fijo = "77974732",
-                    Id = 1,
-                    Manifestacion = "Música",
-                    Movil = "58747585",
-                    Organizaciones = "UNEAC, UPEC",
-                    Foto = new Image()
-                });
-                listArt.Add(new Artistas()
-                {
-                    Nombre = "Susana",
-                    FechaNacimiento = new DateTime(1992, 11, 21),
-                    ActividadProfecional = "FrontEnd",
-                    Correo = "susanabp1992@gmail.com",
-                    Curriculo = "ha trabajado para el sitio oficial del museo de vellas artes",
-                    DireccionWeb = "susy/porahi/miraver/siencuentrasalgo/direc.www.com",
-                    Fijo = "78324543",
-                    Id = 2,
-                    Manifestacion = "Música",
-                    Movil = "58237413",
-                    Organizaciones = "AHS, UNEAC, UPEC",
-                    Foto = new Image()
-                });
-            ListArtistas.ItemsSource = listArt;
+            ObservablelistArt.Clear();
+            listArt = await App.Database.GetArtistas();
+            ObservablelistArt.Clear();
+            listArt.ForEach(x => ObservablelistArt.Add(x));
+            ListArtistas.ItemsSource = ObservablelistArt;
+        }
+        public async void MensajeSubLeft(string texto)
+        {
+            mensajeSubleft.Content = texto;
+            await Task.Delay(10000);
+            mensajeSubleft.Content = "";
         }
         private void ButtonOrganizaciones_Click(object sender, RoutedEventArgs e)
         {
@@ -81,18 +82,28 @@ namespace ApoloAdmin
         {
             new ResumenCurriculo().Show();
         }
-        public static int indexSelected = -1;
         private void Borrar_Click(object sender, RoutedEventArgs e)
         {
             if (ListArtistas.SelectedIndex != -1)
             {
                 indexSelected = ListArtistas.SelectedIndex;
+                SiNo.mensaje = "¿Desea borrar este artista de la base de datos?";
                 new SiNo().Show();
-                ListArtistas.ItemsSource = listArt;
             }
-            else MessageBox.Show("Debe seleccionar un artista para poder borrarlo.");
+            else MensajeSubLeft("Debe seleccionar un artista para poder borrarlo.");
+            procesoActualizacion = false;
+            correo.Text = "";
+            profesion.Text = "";
+            nombre.Text = "";
+            web.Text = "";
+            fijo.Text = "";
+            movil.Text = "";
+            Fecha.SelectedDate = null;
+            Guardar.Content = "Guardar";
+            artSelected = null;
+            ButtonVisible(false);
         }
-        private void Guardar_Click(object sender, RoutedEventArgs e)
+        private async void Guardar_Click(object sender, RoutedEventArgs e)
         {
             string mensajeError = "";
             bool sepuede = true;
@@ -102,32 +113,15 @@ namespace ApoloAdmin
                 mensajeError += "Le faltó el dato obligatorio nombre del artista.\n";
             }
             DateTime fecha = new DateTime();
-            if (!string.IsNullOrEmpty(anno.Text) && !string.IsNullOrEmpty(mes.Text) && !string.IsNullOrEmpty(dia.Text))
+            try
             {
-                try
-                {
-                    Convert.ToInt32(anno.Text);
-                    Convert.ToInt32(dia.Text);
-                    Convert.ToInt32(mes.Text);
-                    if (anno.Text.Length < 4 || anno.Text.Length > 4 || mes.Text.Length < 1 || mes.Text.Length > 2 || dia.Text.Length < 1 || dia.Text.Length > 2)
-                    {
-                        sepuede = false;
-                        mensajeError += "El espacio de año debe tener 4 caracteres, el espacio de mes y de día deben tener 1 o 2 caracteres.\n";
-                    }
-                    else
-                    {
-                        fecha = new DateTime(year: Convert.ToInt32(anno.Text), month: Convert.ToInt32(mes.Text), day: Convert.ToInt32(dia.Text));
-                    }
-                }
-                catch (Exception)
-                {
-                    sepuede = false;
-                    mensajeError += "los parametros de año, mes y día de fecha de nacimiento deben tener solo caracteres numéricos.\n";
-                }
+                fecha = Fecha.SelectedDate.Value;
             }
-            if (sepuede)
+            catch (Exception){}
+            if (sepuede && procesoActualizacion == false)
             {
-                listArt.Add(new Artistas()
+                MensajeSubLeft("Artista guardado correctamente.");
+                Artistas art = new Artistas()
                 {
                     Correo = correo.Text,
                     ActividadProfecional = profesion.Text,
@@ -139,46 +133,109 @@ namespace ApoloAdmin
                     Curriculo = ResumenCurriculo.resumenCurriculo,
                     Organizaciones = Organizaciones.organizaciones,
                     Manifestacion = ManifestacionArtistica.manifestacionArtistica,
-                    Foto = new Image()
-                }) ;
-                ListArtistas.ItemsSource = listArt;
+                };await App.Database.SaveArtistas(art);
+                ByDefault();
                 correo.Text = "";
                 profesion.Text = "";
                 nombre.Text = "";
                 web.Text = "";
                 fijo.Text = "";
                 movil.Text = "";
-                anno.Text = "";
-                mes.Text = "";
-                dia.Text = "";
-                MessageBox.Show("Elemento guardado correctamente");
+                Fecha.SelectedDate = null;
+                ButtonVisible(false);
             }
-            else MessageBox.Show(mensajeError);
+            if (sepuede && procesoActualizacion == true)
+            {
+                Artistas art = new Artistas()
+                {
+                    Id = artSelected.Id,
+                    Correo = correo.Text,
+                    ActividadProfecional = profesion.Text,
+                    Nombre = nombre.Text,
+                    FechaNacimiento = fecha,
+                    DireccionWeb = web.Text,
+                    Fijo = fijo.Text,
+                    Movil = movil.Text,
+                    Curriculo = ResumenCurriculo.resumenCurriculo,
+                    Organizaciones = Organizaciones.organizaciones,
+                    Manifestacion = ManifestacionArtistica.manifestacionArtistica,
+                };await App.Database.SaveUpArtistas(art);
+                ByDefault();
+                procesoActualizacion = false;
+                correo.Text = "";
+                profesion.Text = "";
+                nombre.Text = "";
+                web.Text = "";
+                fijo.Text = "";
+                movil.Text = "";
+                Fecha.SelectedDate = null;
+                Guardar.Content = "Guardar";
+                artSelected = null;
+                MensajeSubLeft("Artista actualizado correctamente.");
+                indexSelected = -1;
+                ButtonVisible(false);
+            }
+            else
+            {
+                MensajeSubLeft(mensajeError);
+            }
+
         }
-    }
-    public class Artistas
-    {
-        //[PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public DateTime FechaNacimiento { get; set; }
-        public Image Foto { get; set; }
-        public string Manifestacion { get; set; }
-        public string ActividadProfecional { get; set; }
-        public string Fijo { get; set; }
-        public string Movil { get; set; }
-        public string Correo { get; set; }
-        public string DireccionWeb { get; set; }
-        public string Curriculo { get; set; }
-        public string Organizaciones { get; set; }
-    }
-    public class Proyectos
-    {
-        //[PrimaryKey, AutoIncrement]
-        public int Id { get; set; }
-        public int IdArt { get; set; }
-        public string Nombre { get; set; }
-        public string Lugar { get; set; }
-        public string Descripcion { get; set; }
+        private void ListArtistas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ButtonVisible(true);
+            if (ListArtistas.SelectedIndex != -1)
+            {
+                index = ListArtistas.SelectedIndex;
+                procesoActualizacion = true;
+                Guardar.Content = "Actualizar";
+                artSelected = new Artistas()
+                {
+                    Nombre = listArt[index].Nombre,
+                    ActividadProfecional = listArt[index].ActividadProfecional,
+                    Correo = listArt[index].Correo,
+                    Curriculo = listArt[index].Curriculo,
+                    DireccionWeb = listArt[index].DireccionWeb,
+                    FechaNacimiento = listArt[index].FechaNacimiento,
+                    Fijo = listArt[index].Fijo,
+                    Foto = listArt[index].Foto,
+                    Movil = listArt[index].Movil,
+                    Manifestacion = listArt[index].Manifestacion,
+                    Id = listArt[index].Id,
+                    Organizaciones = listArt[index].Organizaciones
+                };
+                MensajeSubLeft($"Ha seleccionado al artista {artSelected.Nombre}");
+                Actualizar();
+            }
+        }
+        private void Actualizar()
+        {
+            correo.Text = artSelected.Correo;
+            profesion.Text = artSelected.ActividadProfecional;
+            nombre.Text = artSelected.Nombre;
+            web.Text = artSelected.DireccionWeb;
+            fijo.Text = artSelected.Fijo;
+            movil.Text = artSelected.Movil;
+            Fecha.SelectedDate = artSelected.FechaNacimiento;
+            MensajeSubLeft($"Seleccionó al artista {artSelected.Nombre}");
+
+        }
+        private void Canselar_Click(object sender, RoutedEventArgs e)
+        {
+            procesoActualizacion = false;
+            correo.Text = "";
+            profesion.Text = "";
+            nombre.Text = "";
+            web.Text = "";
+            fijo.Text = "";
+            movil.Text = "";
+            Fecha.SelectedDate = null;
+            Guardar.Content = "Guardar";
+            artSelected = null;
+            MensajeSubLeft("Artista actualizado correctamente.");
+            indexSelected = -1;
+            ButtonVisible(false);
+            index = -1;
+        }
     }
 }

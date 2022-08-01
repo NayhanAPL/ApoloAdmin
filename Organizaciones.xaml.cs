@@ -26,6 +26,17 @@ namespace ApoloAdmin
         private void ByDefault()
         {
             organizaciones = "";
+            if (MainWindow.artSelected != null)
+            {
+                organizaciones = MainWindow.artSelected.Organizaciones;
+                if (organizaciones.Contains("UNEAC, ")) UNEAC.IsChecked = true;
+                if (organizaciones.Contains("ACAA, ")) ACAA.IsChecked = true;
+                if (organizaciones.Contains("UPEC, ")) UPEC.IsChecked = true;
+                if (organizaciones.Contains("UPEC, ")) UPEC.IsChecked = true;
+                if (organizaciones.Contains("AHS, ")) AHS.IsChecked = true;
+                if (organizaciones.Contains("ASCC, ")) ASCC.IsChecked = true;
+                if (organizaciones.Contains("ICRT, ")) ICRT.IsChecked = true;
+            }               
         }
 
         public static string organizaciones = "";

@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="" Opacity="50" MinHeight="150" MinWidth="250" MaxHeight="450" MaxWidth="350" Height="150" Width="250">
+        Title="" Opacity="50" MinHeight="250" MinWidth="350" MaxHeight="250" MaxWidth="350" Height="250" Width="450">
     <Grid Background="White" Margin="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="35"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" x:Name="texto" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Margin="20">¿Desea borrar este artista?</Label>
+        <Label Grid.Row="0" x:Name="texto" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="15" Margin="20"></Label>
         <Separator Grid.Row="1" Background="LightGray"></Separator>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>

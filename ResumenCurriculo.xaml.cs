@@ -9,7 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.IO;
 namespace ApoloAdmin
 {
     /// <summary>
@@ -26,11 +26,14 @@ namespace ApoloAdmin
         private void ByDefault()
         {
             resumenCurriculo = "";
+            if (MainWindow.artSelected != null)
+            {
+                resumenCurriculo = MainWindow.artSelected.Curriculo;
+                resumenCurricular.Text = resumenCurriculo;
+            }    
         }
-
         private void BuscarArchivoCurriculo_Click(object sender, RoutedEventArgs e)
         {
-
         }
         public static string resumenCurriculo = ""; 
         private void Aceptar_Click(object sender, RoutedEventArgs e)
@@ -38,5 +41,26 @@ namespace ApoloAdmin
             resumenCurriculo = resumenCurricular.Text;
             this.Close();
         }
+
+        private void ruta_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string texto = "";
+            try
+            {
+                string x = ruta.Text;
+                using (StreamReader leer = new StreamReader(@$"{x}"))
+                {
+                    while (!leer.EndOfStream)
+                    {
+                        texto += leer.ReadLine();
+                    }
+                    resumenCurricular.Text = texto;
+                    resumenCurriculo = texto;
+                }
+            }
+            catch (Exception) { }
+        }
+
+        //C:\!nayhan\curriculo.txt
     }
 }
