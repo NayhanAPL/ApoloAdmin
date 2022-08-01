@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +71,18 @@ namespace ApoloAdmin
         }
         private void ButtonFoto_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = @"Archivos de imágen (.jpg)|*.jpg| All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = true;
+            bool? checarOK = openFileDialog1.ShowDialog();
+            if (checarOK == true)
+            {
+                //imagen.source = openFileDialog1.FileName.ToString; 
+                //(System.Windows.Media.ImageSource) 
+                imagen.ImageSource = new BitmapImage(new Uri(openFileDialog1.FileName));
+            }
+
         }
         private void ButtonManifestacion_Click(object sender, RoutedEventArgs e)
         {
