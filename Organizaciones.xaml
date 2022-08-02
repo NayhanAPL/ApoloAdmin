@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="Organizaciones" Opacity="50" MinHeight="200" MinWidth="300" MaxHeight="200" MaxWidth="300" Height="200" Width="300">
+        Title="Organizaciones" Opacity="50" MinHeight="200" MinWidth="300" MaxHeight="200" MaxWidth="300" Height="200" Width="300" WindowStartupLocation="CenterScreen">
     <Grid Background="White" Margin="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

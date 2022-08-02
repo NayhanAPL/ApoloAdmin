@@ -27,10 +27,8 @@ namespace ApoloAdmin
 
         private void ByDefault()
         {
-            resumenCurriculo = "";
             if (MainWindow.artSelected != null)
             {
-                resumenCurriculo = MainWindow.artSelected.Curriculo;
                 resumenCurricular.Text = resumenCurriculo;
             }    
         }
@@ -68,6 +66,7 @@ namespace ApoloAdmin
                     while (!leer.EndOfStream)
                     {
                         texto += leer.ReadLine();
+                        texto += "\n";
                     }
                     resumenCurricular.Text = texto;
                     resumenCurriculo = texto;

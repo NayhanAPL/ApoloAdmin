@@ -7,10 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="ManifestacionArtistica.xaml.cs">
+    <Compile Update="Info.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="mensaje.xaml.cs">
+    <Compile Update="ManifestacionArtistica.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Organizaciones.xaml.cs">
@@ -27,13 +27,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Info.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ManifestacionArtistica.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Mensaje.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Organizaciones.xaml">

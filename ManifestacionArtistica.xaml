@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="Manifestación artística" Opacity="50" MinHeight="270" MinWidth="300" MaxHeight="270" MaxWidth="300" Height="270" Width="300">
+        Title="Manifestación artística" Opacity="50" MinHeight="270" MinWidth="300" MaxHeight="270" MaxWidth="300" Height="270" Width="300" WindowStartupLocation="CenterScreen">
     <Grid Background="White" Margin="1">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>

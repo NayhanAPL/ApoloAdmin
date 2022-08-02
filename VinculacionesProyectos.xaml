@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="Vinculación a proyectos" Opacity="50" MinHeight="460" MinWidth="500" MaxHeight="460" MaxWidth="500" Height="452" Width="457">
-    <Grid Background="White" Margin="1">
+        Title="Vinculación a proyectos" Opacity="50" MinHeight="520" MinWidth="500" MaxHeight="520" MaxWidth="500" Height="520" Width="500" WindowStartupLocation="CenterScreen">
+    <Grid Background="White" Margin="10,20,10,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="4*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Margin="10,0,0,10" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray">
+            <ListView Grid.Column="0" Margin="10,22,0,10" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray">
                 <ListView.Resources>
                     <Style TargetType="ScrollBar">
                         <Setter Property="Margin" Value="5"/>
@@ -53,58 +53,58 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Grid.Column="1">
+            <Grid Grid.ColumnSpan="2" Margin="222,-81,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"></RowDefinition>
                     <RowDefinition Height="80"></RowDefinition>
                     <RowDefinition Height="180"></RowDefinition>
                     <RowDefinition Height="35"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Label FontSize="13" Grid.Row="0" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">Nombre del proyecto:</Label>
-                <TextBox Grid.Row="0" Height="25" x:Name="nombre" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
+                <Label FontSize="13" Grid.Row="1" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,15,10,0">Nombre del proyecto:</Label>
+                <TextBox Grid.Row="1" x:Name="nombre" BorderBrush="LightGray" Padding="5,2" Margin="10,44,10,10">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </TextBox.Resources>
                 </TextBox>
-                <Label FontSize="13" Grid.Row="1" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">Lugar donde radica:</Label>
-                <TextBox Grid.Row="1" Height="25" x:Name="lugar" BorderBrush="LightGray" Padding="5,2" Margin="10,0">
+                <Label FontSize="13" Grid.Row="1" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,68,10,133" Grid.RowSpan="2">Lugar donde radica:</Label>
+                <TextBox Grid.Row="2" Height="25" x:Name="lugar" BorderBrush="LightGray" Padding="5,2" Margin="10,15,10,140">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </TextBox.Resources>
                 </TextBox>
-                <Label FontSize="13" Grid.Row="2" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">descripción:</Label>
-                <TextBox Grid.Row="2" TextWrapping="Wrap" x:Name="descripcion" BorderBrush="LightGray" Height="125" Padding="5,2" Margin="10,0">
+                <Label FontSize="13" Grid.Row="2" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,40,10,17" Grid.RowSpan="2">descripción:</Label>
+                <TextBox Grid.Row="2" TextWrapping="Wrap" x:Name="descripcion" BorderBrush="LightGray" Padding="5,2" Margin="10,68,10,-78" Grid.RowSpan="2">
                     <TextBox.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </TextBox.Resources>
                 </TextBox>
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="3" Margin="0,18,0,-17">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="auto"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="Borrar" Click="Borrar_Click" Grid.Column="0" Margin="10,5" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">Borrar
+                    <Button x:Name="Borrar" Click="Borrar_Click" Grid.Column="0" Margin="10,101,10,-91" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">Borrar
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button Grid.Column="1" x:Name="Canselar" HorizontalAlignment="Left" Click="Canselar_Click" Background="CornflowerBlue" Padding="10,0" Height="25" Width="80" FontSize="12" Foreground="White" BorderBrush="AliceBlue" Margin="0,4">Cancelar
+                    <Button x:Name="Canselar" HorizontalAlignment="Left" Click="Canselar_Click" Background="CornflowerBlue" Padding="10,0" Width="80" FontSize="12" Foreground="White" BorderBrush="AliceBlue" Margin="70,101,0,-91" Grid.ColumnSpan="2">Cancelar
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
                             </Style>
                         </Button.Resources>
                     </Button>
-                    <Button x:Name="Guardar" Click="Guardar_Click" Grid.Column="2" Margin="10,5" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">Guardar
+                    <Button x:Name="Guardar" Click="Guardar_Click" Grid.Column="2" Margin="10,101,10,-91" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">Guardar
                         <Button.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -114,16 +114,17 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Separator Grid.Row="1" Background="LightGray"></Separator>
+        <Separator Grid.Row="1" Background="LightGray" Margin="-10,5,-10,34" Grid.RowSpan="2"></Separator>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="364*"></ColumnDefinition>
+                <ColumnDefinition Width="53*"/>
                 <ColumnDefinition Width="auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label Margin="10,0" Foreground="Blue" x:Name="mensajeSubLeft"></Label>
-            <Button x:Name="Aceptar" Click="Aceptar_Click" Grid.Column="1" Margin="10,5" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue">aceptar
+            <Label Margin="0,0,20,0" Foreground="Blue" x:Name="mensajeSubLeft" Grid.ColumnSpan="2"></Label>
+            <Button x:Name="Aceptar" Click="Aceptar_Click" Grid.Column="2" Margin="10,10,10,0" Padding="10,0" Background="CornflowerBlue" Foreground="White" BorderBrush="AliceBlue" Content="Aceptar">
                 <Button.Resources>
-                    <Style TargetType="Border">
+                    <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="5"/>
                     </Style>
                 </Button.Resources>
