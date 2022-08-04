@@ -28,8 +28,6 @@ C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Organizaciones.b
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\VinculacionesProyectos.baml
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\SiNo.g.cs
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\SiNo.baml
-C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Mensaje.g.cs
-C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Mensaje.baml
 C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\SQLite-net.dll
 C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\SQLitePCLRaw.batteries_v2.dll
 C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\SQLitePCLRaw.nativelibrary.dll
@@ -49,3 +47,7 @@ C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\runtimes\win-arm
 C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\Nayhan\source\repos\ApoloAdmin\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.csproj.CopyComplete
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.Properties.Resources.resources
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.csproj.GenerateResource.cache
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Info.g.cs
+C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\Info.baml

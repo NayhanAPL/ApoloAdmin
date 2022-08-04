@@ -1,0 +1,23 @@
+﻿<Window x:Class="ApoloAdmin.Info"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ApoloAdmin"
+        mc:Ignorable="d"
+        Title="Información sobre el creador" Height="120" Width="350" MaxHeight="120" MaxWidth="350" MinHeight="120" MinWidth="350" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label FontSize="12" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,10,0,0">Diseño y desarrollo:</Label>
+            <Label FontSize="12" FontWeight="SemiBold" Foreground="Black" Margin="0,10,10,0">Nayhan Provedo Labrada</Label>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label FontSize="12" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0,0,10">Correo:</Label>
+            <Label FontSize="12" FontWeight="SemiBold" Foreground="Blue" Margin="0,0,10,10">nayhanprovedolabrada@gmail.com</Label>
+        </StackPanel>
+    </Grid>
+</Window>

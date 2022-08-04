@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,12 +31,11 @@ namespace ApoloAdmin
             ByDefault();
         }
 
-        
-
         public static ObservableCollection<Artistas> ObservablelistArt = new ObservableCollection<Artistas>();
         public static List<Artistas> listArt = new List<Artistas>();
         public static Artistas artSelected = new Artistas();
         public static bool procesoActualizacion = false;
+        public static byte[] foto = new byte[] { };
         private static int index = -1;
         public static int indexSelected = -1;
 
@@ -49,7 +51,13 @@ namespace ApoloAdmin
             }
         }
         private async void ByDefault()
-        {           
+        {
+            //await App.Database.SaveUpVersionActual(new VersionActual() { Version = "1", Id = 1 });
+            var version = await App.Database.GetIdVersionActual(1);
+            if (version == null)
+            {
+                await App.Database.SaveVersionActual(new VersionActual() { Version = "1" });
+            }
             listArt.Clear();
             ObservablelistArt.Clear();
             listArt = await App.Database.GetArtistas();
@@ -69,6 +77,24 @@ namespace ApoloAdmin
         }
         private void ButtonFoto_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = @"Archivos de imágen (.jpg)|*.jpg| All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = true;
+            bool? checarOK = openFileDialog1.ShowDialog();
+            if (checarOK == true)
+            {
+                imgBrush.ImageSource = new BitmapImage(new Uri(openFileDialog1.FileName));
+
+                var image = new BitmapImage(new Uri(openFileDialog1.FileName));
+                BitmapEncoder encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    encoder.Save(ms);
+                    foto = ms.ToArray();
+                }
+            }
         }
         private void ButtonManifestacion_Click(object sender, RoutedEventArgs e)
         {
@@ -98,9 +124,14 @@ namespace ApoloAdmin
             web.Text = "";
             fijo.Text = "";
             movil.Text = "";
+            ResumenCurriculo.resumenCurriculo = "";
+            Organizaciones.organizaciones = "";
+            ManifestacionArtistica.manifestacionArtistica = "";
+            imgBrush.ImageSource = null;
             Fecha.SelectedDate = null;
             Guardar.Content = "Guardar";
             artSelected = null;
+            foto = null;
             ButtonVisible(false);
         }
         private async void Guardar_Click(object sender, RoutedEventArgs e)
@@ -133,6 +164,7 @@ namespace ApoloAdmin
                     Curriculo = ResumenCurriculo.resumenCurriculo,
                     Organizaciones = Organizaciones.organizaciones,
                     Manifestacion = ManifestacionArtistica.manifestacionArtistica,
+                    Foto = foto
                 };await App.Database.SaveArtistas(art);
                 ByDefault();
                 correo.Text = "";
@@ -141,7 +173,12 @@ namespace ApoloAdmin
                 web.Text = "";
                 fijo.Text = "";
                 movil.Text = "";
+                ResumenCurriculo.resumenCurriculo = "";
+                Organizaciones.organizaciones = "";
+                ManifestacionArtistica.manifestacionArtistica = "";
+                imgBrush.ImageSource = null;
                 Fecha.SelectedDate = null;
+                foto = null;
                 ButtonVisible(false);
             }
             if (sepuede && procesoActualizacion == true)
@@ -159,6 +196,7 @@ namespace ApoloAdmin
                     Curriculo = ResumenCurriculo.resumenCurriculo,
                     Organizaciones = Organizaciones.organizaciones,
                     Manifestacion = ManifestacionArtistica.manifestacionArtistica,
+                    Foto = foto
                 };await App.Database.SaveUpArtistas(art);
                 ByDefault();
                 procesoActualizacion = false;
@@ -168,12 +206,17 @@ namespace ApoloAdmin
                 web.Text = "";
                 fijo.Text = "";
                 movil.Text = "";
+                imgBrush.ImageSource = null;
                 Fecha.SelectedDate = null;
                 Guardar.Content = "Guardar";
                 artSelected = null;
                 MensajeSubLeft("Artista actualizado correctamente.");
                 indexSelected = -1;
                 ButtonVisible(false);
+                foto = null;
+                ResumenCurriculo.resumenCurriculo = "";
+                Organizaciones.organizaciones = "";
+                ManifestacionArtistica.manifestacionArtistica = "";
             }
             else
             {
@@ -183,9 +226,10 @@ namespace ApoloAdmin
         }
         private void ListArtistas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ButtonVisible(true);
+            
             if (ListArtistas.SelectedIndex != -1)
             {
+                ButtonVisible(true);
                 index = ListArtistas.SelectedIndex;
                 procesoActualizacion = true;
                 Guardar.Content = "Actualizar";
@@ -217,8 +261,22 @@ namespace ApoloAdmin
             fijo.Text = artSelected.Fijo;
             movil.Text = artSelected.Movil;
             Fecha.SelectedDate = artSelected.FechaNacimiento;
-            MensajeSubLeft($"Seleccionó al artista {artSelected.Nombre}");
+            foto = artSelected.Foto;
+            ResumenCurriculo.resumenCurriculo = artSelected.Curriculo;
+            Organizaciones.organizaciones = artSelected.Organizaciones;
+            ManifestacionArtistica.manifestacionArtistica = artSelected.Manifestacion;
+            if (artSelected.Foto != null && artSelected.Foto.Length > 0)
+            {
+                var stream = new MemoryStream(artSelected.Foto);
+                stream.Seek(0, SeekOrigin.Begin);
+                var bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.StreamSource = stream;
+                bmp.EndInit();
+                imgBrush.ImageSource = bmp;
+            }
 
+            MensajeSubLeft($"Seleccionó al artista {artSelected.Nombre}");
         }
         private void Canselar_Click(object sender, RoutedEventArgs e)
         {
@@ -232,10 +290,53 @@ namespace ApoloAdmin
             Fecha.SelectedDate = null;
             Guardar.Content = "Guardar";
             artSelected = null;
-            MensajeSubLeft("Artista actualizado correctamente.");
+            MensajeSubLeft("Artista desmarcado, puede continuar creando otros artistas.");
             indexSelected = -1;
             ButtonVisible(false);
             index = -1;
+            foto = null;
+            imgBrush.ImageSource = null;
+            ResumenCurriculo.resumenCurriculo = "";
+            Organizaciones.organizaciones = "";
+            ManifestacionArtistica.manifestacionArtistica = "";
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<Artistas> lista = new List<Artistas>();
+            if (filtro.Text != " " && filtro.Text != "")
+            {
+                lista.AddRange(listArt.FindAll(x => 
+                x.Nombre.Contains(filtro.Text) || 
+                x.Manifestacion.Contains(filtro.Text) || 
+                x.ActividadProfecional.Contains(filtro.Text) || 
+                x.Organizaciones.Contains(filtro.Text)));
+
+                ObservablelistArt.Clear();
+                lista.ForEach(x => ObservablelistArt.Add(x));
+            }
+            if(lista.Count == 0)
+            {
+                ObservablelistArt.Clear();
+                listArt.ForEach(x => ObservablelistArt.Add(x));
+                MensajeSubLeft("No se encontraton Coincidencias.");
+            }
+        }
+        private void Info_Click(object sender, RoutedEventArgs e)
+        {
+            new Info().Show();
+        }
+        private async void exportarDB_Click(object sender, RoutedEventArgs e)
+        {
+            string pathDest = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            string pathAct = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ApoloAdmin.db3");
+            string nameDB = "Apolo";
+            var version = await App.Database.GetIdVersionActual(1);
+            nameDB += version.Version;
+            nameDB += ".db3";
+            string destFile = System.IO.Path.Combine(pathDest, nameDB);
+            Directory.CreateDirectory(pathDest);
+            File.Copy(pathAct, destFile, true);
+            await App.Database.SaveUpVersionActual(new VersionActual() { Version = (Convert.ToInt32(version.Version) + 1).ToString(), Id = 1 });
         }
     }
 }

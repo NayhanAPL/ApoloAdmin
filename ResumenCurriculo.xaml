@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
-        Title="Resumen curricular" Opacity="1" MinHeight="310" MinWidth="500" MaxHeight="310" MaxWidth="500" Height="310" Width="500">
+        Title="Resumen curricular" Opacity="1" MinHeight="310" MinWidth="500" MaxHeight="310" MaxWidth="500" Height="310" Width="500" WindowStartupLocation="CenterScreen">
     <Grid Background="White" Margin="1">
         <Grid.Resources>
             <Style TargetType="Border">

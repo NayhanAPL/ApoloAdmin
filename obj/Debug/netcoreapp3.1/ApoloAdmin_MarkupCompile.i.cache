@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 C:\Users\Nayhan\source\repos\ApoloAdmin\App.xaml
-61078269742
+71918522883
 
-101087652824
+14773031851
 197-1962287767
-MainWindow.xaml;ManifestacionArtistica.xaml;Organizaciones.xaml;ResumenCurriculo.xaml;SiNo.xaml;VinculacionesProyectos.xaml;
+Info.xaml;MainWindow.xaml;ManifestacionArtistica.xaml;Organizaciones.xaml;ResumenCurriculo.xaml;SiNo.xaml;VinculacionesProyectos.xaml;
 
-True
+False
 

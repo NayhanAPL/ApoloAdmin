@@ -25,10 +25,8 @@ namespace ApoloAdmin
 
         private void ByDefault()
         {
-            manifestacionArtistica = "";
             if (MainWindow.artSelected != null)
             {
-                manifestacionArtistica = MainWindow.artSelected.Manifestacion;
                 if (manifestacionArtistica == "Danza") manifestacion.SelectedIndex = 0;
                 else if (manifestacionArtistica == "Música") manifestacion.SelectedIndex = 1;
                 else if (manifestacionArtistica == "Teatro") manifestacion.SelectedIndex = 2;

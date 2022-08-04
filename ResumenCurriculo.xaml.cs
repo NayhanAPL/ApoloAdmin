@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
+using Microsoft.Win32;
+
 namespace ApoloAdmin
 {
     /// <summary>
@@ -25,15 +27,27 @@ namespace ApoloAdmin
 
         private void ByDefault()
         {
-            resumenCurriculo = "";
             if (MainWindow.artSelected != null)
             {
-                resumenCurriculo = MainWindow.artSelected.Curriculo;
                 resumenCurricular.Text = resumenCurriculo;
             }    
         }
         private void BuscarArchivoCurriculo_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog().HasValue)
+            {
+                var fileStream = openFileDialog.OpenFile();
+                using (StreamReader reader = new StreamReader(fileStream))
+                {
+                    resumenCurriculo = reader.ReadToEnd();
+                }
+                resumenCurricular.Text = resumenCurriculo;
+            }
         }
         public static string resumenCurriculo = ""; 
         private void Aceptar_Click(object sender, RoutedEventArgs e)
@@ -41,7 +55,6 @@ namespace ApoloAdmin
             resumenCurriculo = resumenCurricular.Text;
             this.Close();
         }
-
         private void ruta_TextChanged(object sender, TextChangedEventArgs e)
         {
             string texto = "";
@@ -53,6 +66,7 @@ namespace ApoloAdmin
                     while (!leer.EndOfStream)
                     {
                         texto += leer.ReadLine();
+                        texto += "\n";
                     }
                     resumenCurricular.Text = texto;
                     resumenCurriculo = texto;

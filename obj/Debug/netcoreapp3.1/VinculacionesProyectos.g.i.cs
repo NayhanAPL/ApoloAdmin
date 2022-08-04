@@ -125,7 +125,7 @@ namespace ApoloAdmin {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/ApoloAdmin;V1.0.0.0;component/vinculacionesproyectos.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ApoloAdmin;component/vinculacionesproyectos.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\VinculacionesProyectos.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

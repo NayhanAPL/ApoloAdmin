@@ -59,8 +59,6 @@ namespace ApoloAdmin
                 MainWindow.ObservablelistArt.Clear();
                 MainWindow.listArt.ForEach(x => MainWindow.ObservablelistArt.Add(x));
                 MainWindow.indexSelected = -1;
-                Mensaje.mensajeAlerta = "El artista ha sido eliminado de la base de datos";
-                new Mensaje().Show();
                 this.Close();
             }
         }

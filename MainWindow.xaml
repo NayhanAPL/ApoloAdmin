@@ -6,23 +6,40 @@
         xmlns:local="clr-namespace:ApoloAdmin"
         mc:Ignorable="d"
         Background="White"
-        Title="MainWindow" MinHeight="700" MinWidth="950" Height="700" Width="950">
+        Title="Admin" MinHeight="700" MinWidth="950" Height="700" Width="950" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="6*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Margin="20,0,20,15" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="113*"/>
+                <ColumnDefinition Width="33*"/>
+                <ColumnDefinition Width="45*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"></RowDefinition>
                 <RowDefinition Height="15*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Label FontSize="40" FontWeight="UltraBlack" HorizontalAlignment="Center" Foreground="CornflowerBlue" Margin="0">Apolo</Label>
-                <Label FontSize="25" FontWeight="ExtraLight" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="CornflowerBlue" Margin="0,5,0,0">Admin</Label>
-            </StackPanel>
-            <ListView Grid.Row="1" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray">
+            <Grid Grid.Row="0" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" FontSize="40" FontWeight="UltraBlack" HorizontalAlignment="Center" Foreground="CornflowerBlue" Margin="0">Apolo</Label>
+                <Label Grid.Column="1" FontSize="25" FontWeight="ExtraLight" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="CornflowerBlue" Margin="0,5,0,0">Admin</Label>
+                <Button Grid.Column="2" x:Name="exportarDB" Click="exportarDB_Click" VerticalAlignment="Center" HorizontalAlignment="Right" Background="CornflowerBlue" Padding="8,2" Height="25" FontSize="12" Foreground="White" BorderBrush="AliceBlue" Margin="0,10,0,0">Exportar
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+            <ListView SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray" Grid.ColumnSpan="3" Margin="0,70,0,70" Grid.RowSpan="3">
                 <ListView.Resources>
                     <Style TargetType="ScrollBar">
                         <Setter Property="Margin" Value="5"/>
@@ -50,6 +67,15 @@
                                         </Style>
                                     </Button.Resources>
                                 </Button>
+                                <Ellipse Width="60" Height="60" Grid.Column="0">
+                                    <Ellipse.Fill>
+                                        <ImageBrush x:Name="imgBrushList">
+                                            <ImageBrush.ImageSource>
+                                                <Binding Path="Foto"/>
+                                            </ImageBrush.ImageSource>
+                                        </ImageBrush>
+                                    </Ellipse.Fill>
+                                </Ellipse>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"></RowDefinition>
@@ -71,7 +97,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Grid.ColumnSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -82,7 +108,7 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label FontSize="13" Grid.Column="0" VerticalAlignment="Center" Grid.Row="0" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="0">Buscar:</Label>
-                    <TextBox Height="25" Grid.Column="1" Padding="5,2" Margin="0">
+                    <TextBox Height="25" Grid.Column="1" TextChanged="TextBox_TextChanged" x:Name="filtro" Padding="5,2" Margin="0">
                         <TextBox.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="CornerRadius" Value="5"/>
@@ -96,7 +122,7 @@
                 <Label Grid.Row="1" x:Name="mensajeSubleft" FontSize="11" Foreground="CornflowerBlue" FontWeight="SemiBold" HorizontalAlignment="Left" VerticalAlignment="Top"></Label>
             </Grid>
         </Grid>
-        <Grid Background="White" Grid.Column="1" Margin="0,15,15,15">
+        <Grid Background="White" Margin="0,15,15,15" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"></RowDefinition>
                 <RowDefinition Height="2*"></RowDefinition>
@@ -112,13 +138,25 @@
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Margin="15" Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Gray" Background="White">
+                <Button x:Name="Info" Grid.Column="2" FontWeight="Bold" Click="Info_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Background="CornflowerBlue" Padding="0" Height="20" Width="20" FontSize="12" Foreground="White" BorderBrush="Blue" Margin="10,10,10,10">i
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Button Grid.Column="1" Margin="5" Width="150" Height="150" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="Gray" Background="White">
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="75"/>
                         </Style>
                     </Button.Resources>
                 </Button>
+                <Ellipse Width="150" Height="150" Grid.Column="1">
+                    <Ellipse.Fill>
+                        <ImageBrush x:Name="imgBrush"></ImageBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <Button Grid.Column="1" x:Name="ButtonFoto" Click="ButtonFoto_Click" Margin="0,0,25,15" Width="40" Height="40" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="White" FontWeight="Black" BorderBrush="AliceBlue" Background="CornflowerBlue">Foto
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -141,7 +179,7 @@
                     </TextBox.Resources>
                 </TextBox>
                 <Label FontSize="13" Grid.Column="1" FontWeight="SemiBold" Foreground="DarkSlateGray" Margin="10,0">Fecha de nacimiento:</Label>
-                <DatePicker Grid.Column="1" Width="235" BorderBrush="Gray" x:Name="Fecha" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <DatePicker Grid.Column="1" MinWidth="230" MaxHeight="350" BorderBrush="Gray" x:Name="Fecha" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <DatePicker.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
@@ -248,21 +286,21 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" x:Name="Borrar" FontWeight="Bold" Click="Borrar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="20,32,20,0">Borrar
+                <Button Grid.Column="0" x:Name="Borrar" FontWeight="Bold" Click="Borrar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="10,32,20,0">Borrar
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Button Grid.Column="1" x:Name="Canselar" HorizontalAlignment="Left" FontWeight="Bold" Click="Canselar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" Width="110" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="0,32,0,0">Cancelar
+                <Button x:Name="Canselar" HorizontalAlignment="Left" FontWeight="Bold" Click="Canselar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" Width="110" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="103,33,0,0" Grid.ColumnSpan="2">Cancelar
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
                         </Style>
                     </Button.Resources>
                 </Button>
-                <Button Grid.Column="2" x:Name="Guardar" FontWeight="Bold" Click="Guardar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="20,32,20,0">Guardar
+                <Button Grid.Column="2" x:Name="Guardar" FontWeight="Bold" Click="Guardar_Click" Background="CornflowerBlue" Padding="20,5" Height="40" FontSize="15" Foreground="White" BorderBrush="AliceBlue" Margin="20,32,10,0">Guardar
                     <Button.Resources>
                         <Style TargetType="Border">
                             <Setter Property="CornerRadius" Value="5"/>
