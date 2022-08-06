@@ -6,12 +6,12 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ApoloAdmin
 {
-    public class Artistas
+    public class Artista
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public DateTime FechaNacimiento { get; set; }
+        public string FechaNacimiento { get; set; }
         public byte[] Foto { get; set; }
         public string Manifestacion { get; set; }
         public string ActividadProfecional { get; set; }

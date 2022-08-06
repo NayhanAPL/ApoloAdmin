@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="4*"></ColumnDefinition>
                 <ColumnDefinition Width="5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <ListView Grid.Column="0" Margin="10,22,0,10" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListArtistas" BorderBrush="LightGray">
+            <ListView Grid.Column="0" Margin="10,22,0,10" SelectionChanged="ListArtistas_SelectionChanged" x:Name="ListProyectos" BorderBrush="LightGray">
                 <ListView.Resources>
                     <Style TargetType="ScrollBar">
                         <Setter Property="Margin" Value="5"/>

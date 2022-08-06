@@ -31,9 +31,9 @@ namespace ApoloAdmin
             ByDefault();
         }
 
-        public static ObservableCollection<Artistas> ObservablelistArt = new ObservableCollection<Artistas>();
-        public static List<Artistas> listArt = new List<Artistas>();
-        public static Artistas artSelected = new Artistas();
+        public static ObservableCollection<Artista> ObservablelistArt = new ObservableCollection<Artista>();
+        public static List<Artista> listArt = new List<Artista>();
+        public static Artista artSelected = new Artista();
         public static bool procesoActualizacion = false;
         public static byte[] foto = new byte[] { };
         private static int index = -1;
@@ -149,15 +149,16 @@ namespace ApoloAdmin
                 fecha = Fecha.SelectedDate.Value;
             }
             catch (Exception){}
+            int id = 0;
             if (sepuede && procesoActualizacion == false)
             {
                 MensajeSubLeft("Artista guardado correctamente.");
-                Artistas art = new Artistas()
+                Artista art = new Artista()
                 {
                     Correo = correo.Text,
                     ActividadProfecional = profesion.Text,
                     Nombre = nombre.Text,
-                    FechaNacimiento = fecha,
+                    FechaNacimiento = fecha.Day.ToString() + "/" + fecha.Month.ToString() + "/" + fecha.Year.ToString(),
                     DireccionWeb = web.Text,
                     Fijo = fijo.Text,
                     Movil = movil.Text,
@@ -166,6 +167,9 @@ namespace ApoloAdmin
                     Manifestacion = ManifestacionArtistica.manifestacionArtistica,
                     Foto = foto
                 };await App.Database.SaveArtistas(art);
+                var last = await App.Database.GetLastItemArtistas();
+                if (last != null)
+                { id = last[0].Id; }
                 ByDefault();
                 correo.Text = "";
                 profesion.Text = "";
@@ -179,17 +183,19 @@ namespace ApoloAdmin
                 imgBrush.ImageSource = null;
                 Fecha.SelectedDate = null;
                 foto = null;
+                artSelected = null;
                 ButtonVisible(false);
             }
-            if (sepuede && procesoActualizacion == true)
+            else if (sepuede && procesoActualizacion == true)
             {
-                Artistas art = new Artistas()
+                id = artSelected.Id;
+                Artista art = new Artista()
                 {
                     Id = artSelected.Id,
                     Correo = correo.Text,
                     ActividadProfecional = profesion.Text,
                     Nombre = nombre.Text,
-                    FechaNacimiento = fecha,
+                    FechaNacimiento = fecha.Day.ToString() + "/" + fecha.Month.ToString() + "/" + fecha.Year.ToString(),
                     DireccionWeb = web.Text,
                     Fijo = fijo.Text,
                     Movil = movil.Text,
@@ -219,21 +225,26 @@ namespace ApoloAdmin
                 ManifestacionArtistica.manifestacionArtistica = "";
             }
             else
-            {
+            {                
                 MensajeSubLeft(mensajeError);
+                artSelected = null;
             }
-
+            var sinId = await App.Database.GetByIdArtProyectos(0);
+            foreach (var item in sinId)
+            {item.IdArt = id; await App.Database.SaveUpProyectos(item);}
         }
-        private void ListArtistas_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void ListArtistas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            var sinId = await App.Database.GetByIdArtProyectos(0);
+            foreach (var item in sinId)
+            { await App.Database.DeleteProyectos(item); }
             if (ListArtistas.SelectedIndex != -1)
             {
                 ButtonVisible(true);
                 index = ListArtistas.SelectedIndex;
                 procesoActualizacion = true;
                 Guardar.Content = "Actualizar";
-                artSelected = new Artistas()
+                artSelected = new Artista()
                 {
                     Nombre = listArt[index].Nombre,
                     ActividadProfecional = listArt[index].ActividadProfecional,
@@ -260,7 +271,7 @@ namespace ApoloAdmin
             web.Text = artSelected.DireccionWeb;
             fijo.Text = artSelected.Fijo;
             movil.Text = artSelected.Movil;
-            Fecha.SelectedDate = artSelected.FechaNacimiento;
+            Fecha.SelectedDate = Convert.ToDateTime(artSelected.FechaNacimiento);
             foto = artSelected.Foto;
             ResumenCurriculo.resumenCurriculo = artSelected.Curriculo;
             Organizaciones.organizaciones = artSelected.Organizaciones;
@@ -302,7 +313,7 @@ namespace ApoloAdmin
         }
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            List<Artistas> lista = new List<Artistas>();
+            List<Artista> lista = new List<Artista>();
             if (filtro.Text != " " && filtro.Text != "")
             {
                 lista.AddRange(listArt.FindAll(x => 
@@ -328,7 +339,7 @@ namespace ApoloAdmin
         private async void exportarDB_Click(object sender, RoutedEventArgs e)
         {
             string pathDest = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            string pathAct = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ApoloAdmin.db3");
+            string pathAct = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ApoloAdministracion.db3");
             string nameDB = "Apolo";
             var version = await App.Database.GetIdVersionActual(1);
             nameDB += version.Version;
@@ -337,6 +348,7 @@ namespace ApoloAdmin
             Directory.CreateDirectory(pathDest);
             File.Copy(pathAct, destFile, true);
             await App.Database.SaveUpVersionActual(new VersionActual() { Version = (Convert.ToInt32(version.Version) + 1).ToString(), Id = 1 });
+            MensajeSubLeft($"La base de datos fué copiada en el escritorio.");
         }
     }
 }

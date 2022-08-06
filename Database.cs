@@ -10,7 +10,7 @@ namespace ApoloAdmin
         public Database(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
-            _database.CreateTableAsync<Artistas>().Wait();
+            _database.CreateTableAsync<Artista>().Wait();
             _database.CreateTableAsync<Proyectos>().Wait();
             _database.CreateTableAsync<VersionActual>().Wait();
         }
@@ -43,33 +43,37 @@ namespace ApoloAdmin
 
         //---------------------------------Artistas-------------------------------------------
 
-
-        //consulta completa Artistas----------------------------------------------------------
-        public Task<List<Artistas>> GetArtistas()
+        // devuelve el ultimo elemento guardado---------------------------------------------------
+        public async Task<List<Artista>> GetLastItemArtistas()
         {
-            return _database.Table<Artistas>().ToListAsync();
+            return await _database.QueryAsync<Artista>($"Select * from Artista order by Id desc limit 1");
+        }
+        //consulta completa Artistas----------------------------------------------------------
+        public Task<List<Artista>> GetArtistas()
+        {
+            return _database.Table<Artista>().ToListAsync();
         }
         //consulta por id de Artistas---------------------------------------------------------
-        public Task<Artistas> GetIdArtistas(int Id)
+        public Task<Artista> GetIdArtistas(int Id)
         {
-            return _database.Table<Artistas>().Where(a => a.Id == Id).FirstOrDefaultAsync();
+            return _database.Table<Artista>().Where(a => a.Id == Id).FirstOrDefaultAsync();
         }
         //annadir el Artistas en la db--------------------------------------------------------
-        public Task<int> SaveArtistas(Artistas U)
+        public Task<int> SaveArtistas(Artista U)
         {
             if (U.Id == 0)
                 return _database.InsertAsync(U);
             else return null;
         }
         //guardar la actualizacion de el Artistas en la db------------------------------------
-        public Task<int> SaveUpArtistas(Artistas U)
+        public Task<int> SaveUpArtistas(Artista U)
         {
             if (U.Id != 0)
                 return _database.UpdateAsync(U);
             else return _database.InsertAsync(U);
         }
         // borrar una fila de la tabla Artistas-----------------------------------------------
-        public Task<int> DeleteArtistas(Artistas Artistas)
+        public Task<int> DeleteArtistas(Artista Artistas)
         {
             var x = _database.DeleteAsync(Artistas);
             return x;
