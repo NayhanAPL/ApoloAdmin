@@ -24,16 +24,16 @@ namespace ApoloAdmin
             InitializeComponent();
             ByDefault();
         }
-        public static List<Proyectos> proyectos = new List<Proyectos>();
-        public static ObservableCollection<Proyectos> observableProyectos = new ObservableCollection<Proyectos>();
+        public static List<Proyecto> proyectos = new List<Proyecto>();
+        public static ObservableCollection<Proyecto> observableProyectos = new ObservableCollection<Proyecto>();
         public static bool selectedItem = false;
-        public static Proyectos proSelected = new Proyectos();
+        public static Proyecto proSelected = new Proyecto();
         private async void ByDefault()
         {
                 proyectos.Clear();
                 observableProyectos.Clear();
                 ButtonVisible(false);
-                proyectos = MainWindow.artSelected == null ? await App.Database.GetByIdArtProyectos(0): await App.Database.GetByIdArtProyectos(MainWindow.artSelected.Id);
+                proyectos = MainWindow.artSelected == null ? await App.Database.GetByNameArtProyectos(""): await App.Database.GetByNameArtProyectos(MainWindow.artSelected.Nombre);
                 proyectos.ForEach(x => observableProyectos.Add(x));
                 ListProyectos.ItemsSource = observableProyectos;
         }
@@ -51,7 +51,7 @@ namespace ApoloAdmin
                 await App.Database.DeleteProyectos(proSelected);
                 proyectos.Clear();
                 observableProyectos.Clear();
-                proyectos = MainWindow.artSelected == null? await App.Database.GetByIdArtProyectos(0) :  await App.Database.GetByIdArtProyectos(MainWindow.artSelected.Id);
+                proyectos = MainWindow.artSelected == null ? await App.Database.GetByNameArtProyectos("") : await App.Database.GetByNameArtProyectos(MainWindow.artSelected.Nombre);
                 proyectos.ForEach(x => observableProyectos.Add(x));
                 MensajeSubLeft($"Ha borrado el proyecto {proSelected.Nombre} de la base de datos.");
                 ButtonVisible(false);
@@ -78,9 +78,9 @@ namespace ApoloAdmin
             if (!string.IsNullOrEmpty(descripcion.Text)) Descripcion = descripcion.Text;
             if (sepuede && !selectedItem)
             {
-                Proyectos pro = new Proyectos()
+                Proyecto pro = new Proyecto()
                 {
-                    IdArt = MainWindow.artSelected == null? 0: MainWindow.artSelected.Id,
+                    NameArt = MainWindow.artSelected == null? "": MainWindow.artSelected.Nombre,
                     Descripcion = Descripcion,
                     Lugar = Lugar,
                     Nombre = Nombre
@@ -96,10 +96,10 @@ namespace ApoloAdmin
             }
             if (sepuede && selectedItem && ListProyectos.SelectedIndex != -1)
             {
-                Proyectos pro = new Proyectos()
+                Proyecto pro = new Proyecto()
                 {
                     Id = proSelected.Id,
-                    IdArt = MainWindow.artSelected == null ? 0 : MainWindow.artSelected.Id,
+                    NameArt = MainWindow.artSelected == null ? "" : MainWindow.artSelected.Nombre,
                     Descripcion = Descripcion,
                     Lugar = Lugar,
                     Nombre = Nombre
@@ -107,7 +107,7 @@ namespace ApoloAdmin
 
                 proyectos.Clear();
                 observableProyectos.Clear();
-                proyectos = MainWindow.artSelected == null? await App.Database.GetByIdArtProyectos(0) :await App.Database.GetByIdArtProyectos(MainWindow.artSelected.Id);
+                proyectos = MainWindow.artSelected == null? await App.Database.GetByNameArtProyectos("") :await App.Database.GetByNameArtProyectos(MainWindow.artSelected.Nombre);
                 proyectos.ForEach(x => observableProyectos.Add(x));
 
                 Guardar.Content = "Guardar";

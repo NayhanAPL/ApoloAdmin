@@ -102,6 +102,7 @@ namespace ApoloAdmin
         }
         private void ButtonVinculaciones_Click(object sender, RoutedEventArgs e)
         {
+            if (artSelected != null) { if (artSelected.Nombre == null) artSelected = null; }
             new VinculacionesProyectos().Show();
         }
         private void ButtonCurriculo_Click(object sender, RoutedEventArgs e)
@@ -149,7 +150,7 @@ namespace ApoloAdmin
                 fecha = Fecha.SelectedDate.Value;
             }
             catch (Exception){}
-            int id = 0;
+            string name = "";
             if (sepuede && procesoActualizacion == false)
             {
                 MensajeSubLeft("Artista guardado correctamente.");
@@ -169,7 +170,7 @@ namespace ApoloAdmin
                 };await App.Database.SaveArtistas(art);
                 var last = await App.Database.GetLastItemArtistas();
                 if (last != null)
-                { id = last[0].Id; }
+                { name = last[0].Nombre; }
                 ByDefault();
                 correo.Text = "";
                 profesion.Text = "";
@@ -188,7 +189,7 @@ namespace ApoloAdmin
             }
             else if (sepuede && procesoActualizacion == true)
             {
-                id = artSelected.Id;
+                name = artSelected.Nombre;
                 Artista art = new Artista()
                 {
                     Id = artSelected.Id,
@@ -229,13 +230,13 @@ namespace ApoloAdmin
                 MensajeSubLeft(mensajeError);
                 artSelected = null;
             }
-            var sinId = await App.Database.GetByIdArtProyectos(0);
-            foreach (var item in sinId)
-            {item.IdArt = id; await App.Database.SaveUpProyectos(item);}
+            var sinName = await App.Database.GetByNameArtProyectos("");
+            foreach (var item in sinName)
+            {item.NameArt = name; await App.Database.SaveUpProyectos(item);}
         }
         private async void ListArtistas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var sinId = await App.Database.GetByIdArtProyectos(0);
+            var sinId = await App.Database.GetByNameArtProyectos("");
             foreach (var item in sinId)
             { await App.Database.DeleteProyectos(item); }
             if (ListArtistas.SelectedIndex != -1)
@@ -339,7 +340,7 @@ namespace ApoloAdmin
         private async void exportarDB_Click(object sender, RoutedEventArgs e)
         {
             string pathDest = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            string pathAct = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ApoloAdministracion.db3");
+            string pathAct = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ApoloAdministration.db3");
             string nameDB = "Apolo";
             var version = await App.Database.GetIdVersionActual(1);
             nameDB += version.Version;

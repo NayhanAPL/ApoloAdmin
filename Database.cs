@@ -11,7 +11,7 @@ namespace ApoloAdmin
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Artista>().Wait();
-            _database.CreateTableAsync<Proyectos>().Wait();
+            _database.CreateTableAsync<Proyecto>().Wait();
             _database.CreateTableAsync<VersionActual>().Wait();
         }
 
@@ -84,39 +84,39 @@ namespace ApoloAdmin
 
 
         //consulta completa Proyectos----------------------------------------------------------
-        public Task<List<Proyectos>> GetProyectos()
+        public Task<List<Proyecto>> GetProyectos()
         {
-            return _database.Table<Proyectos>().ToListAsync();
+            return _database.Table<Proyecto>().ToListAsync();
         }
         //consulta por id de Favoritos---------------------------------------------------------
-        public Task<Proyectos> GetIdProyectos(int Id)
+        public Task<Proyecto> GetIdProyectos(int Id)
         {
-            return _database.Table<Proyectos>().Where(a => a.Id == Id).FirstOrDefaultAsync();
+            return _database.Table<Proyecto>().Where(a => a.Id == Id).FirstOrDefaultAsync();
         }
         //annadir el Proyectos en la db--------------------------------------------------------
-        public Task<int> SaveProyectos(Proyectos U)
+        public Task<int> SaveProyectos(Proyecto U)
         {
             if (U.Id == 0)
                 return _database.InsertAsync(U);
             else return null;
         }
         //guardar la actualizacion de el Proyectos en la db------------------------------------
-        public Task<int> SaveUpProyectos(Proyectos U)
+        public Task<int> SaveUpProyectos(Proyecto U)
         {
             if (U.Id != 0)
                 return _database.UpdateAsync(U);
             else return _database.InsertAsync(U);
         }
         // borrar una fila de la tabla Proyectos-----------------------------------------------
-        public Task<int> DeleteProyectos(Proyectos Proyectos)
+        public Task<int> DeleteProyectos(Proyecto Proyectos)
         {
             var x = _database.DeleteAsync(Proyectos);
             return x;
         }
         // devuelve por IdArt en Proyectos------------------------------------------------------
-        public async Task<List<Proyectos>> GetByIdArtProyectos(int id)
+        public async Task<List<Proyecto>> GetByNameArtProyectos(string name)
         {
-            return await _database.QueryAsync<Proyectos>($"Select * from Proyectos where IdArt = '{id}'");
+            return await _database.QueryAsync<Proyecto>($"Select * from Proyecto where NameArt = '{name}'");
         }
     }
 }

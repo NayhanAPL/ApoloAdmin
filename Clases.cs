@@ -22,11 +22,11 @@ namespace ApoloAdmin
         public string Curriculo { get; set; }
         public string Organizaciones { get; set; }
     }
-    public class Proyectos
+    public class Proyecto
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int IdArt { get; set; }
+        public string NameArt { get; set; }
         public string Nombre { get; set; }
         public string Lugar { get; set; }
         public string Descripcion { get; set; }

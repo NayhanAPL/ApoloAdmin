@@ -51,8 +51,8 @@ namespace ApoloAdmin
             if (MainWindow.indexSelected != -1)
             {
                 sino = true;
-                int id = MainWindow.listArt[MainWindow.indexSelected].Id;
-                var proyectos = await App.Database.GetByIdArtProyectos(id);
+                string name = MainWindow.listArt[MainWindow.indexSelected].Nombre;
+                var proyectos = await App.Database.GetByNameArtProyectos(name);
                 proyectos.ForEach(async x => await App.Database.DeleteProyectos(x));
                 await App.Database.DeleteArtistas(MainWindow.listArt[MainWindow.indexSelected]);
                 MainWindow.listArt.RemoveAt(MainWindow.indexSelected);
