@@ -50,4 +50,3 @@ C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.cspro
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.dll
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.pdb
 C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.genruntimeconfig.cache
-C:\Users\Nayhan\source\repos\ApoloAdmin\obj\Debug\netcoreapp3.1\ApoloAdmin.csproj.AssemblyReference.cache
